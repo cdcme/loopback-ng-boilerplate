@@ -73,12 +73,24 @@ app.use(app.router);
 // The static file server should come after all other routes
 // Every request that goes through the static middleware hits
 // the file system to check if a file exists.
-app.use(loopback.static(path.join(__dirname, '..', 'client', 'bin')));
+
+// PRODUCTION
+// app.use(loopback.static(path.join(__dirname, '..', 'client', 'bin')));
+
+// DEVELOPMENT
+app.use(loopback.static(path.join(__dirname, '..', 'client', 'build')));
 
 // Requests that don't match any of the above should be sent to
 // index, where we'll handle them using HTML5 history (Angular client)
+
+// PRODUCTION
+// app.use(function(req, res) {
+//   res.sendfile(path.join(__dirname, '..', 'client', 'bin', 'index.html'));
+// });
+
+// DEVELOPMENT
 app.use(function(req, res) {
-  res.sendfile(path.join(__dirname, '..', 'client', 'bin', 'index.html'));
+  res.sendfile(path.join(__dirname, '..', 'client', 'build', 'index.html'));
 });
 
 // Requests that get this far won't be handled
