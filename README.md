@@ -11,7 +11,7 @@ but if not, just add sudo where appropriate.
 
 ```shell
 mkdir myApp && cd myApp
-git clone https://carlodicelico.github.com/loopback-ng-boilerplate .
+git clone https://github.com/carlodicelico/loopback-ng-boilerplate.git .
 cd server && npm install
 cd ../client && npm install && bower install
 grunt watch
