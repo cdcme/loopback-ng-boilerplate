@@ -1,0 +1,132 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Loopback-ng-boilerplate by carlodicelico</title>
+
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1>Loopback-ng-boilerplate</h1>
+        <p>An application skeleton for a typical Loopback+AngularJS web app using ng-boilerplate</p>
+
+        <p class="view"><a href="https://github.com/carlodicelico/loopback-ng-boilerplate">View the Project on GitHub <small>carlodicelico/loopback-ng-boilerplate</small></a></p>
+
+
+        <ul>
+          <li><a href="https://github.com/carlodicelico/loopback-ng-boilerplate/zipball/master">Download <strong>ZIP File</strong></a></li>
+          <li><a href="https://github.com/carlodicelico/loopback-ng-boilerplate/tarball/master">Download <strong>TAR Ball</strong></a></li>
+          <li><a href="https://github.com/carlodicelico/loopback-ng-boilerplate">View On <strong>GitHub</strong></a></li>
+        </ul>
+      </header>
+      <section>
+        <h1>
+<a name="loopback-ng-boilerplate" class="anchor" href="#loopback-ng-boilerplate"><span class="octicon octicon-link"></span></a>loopback-ng-boilerplate</h1>
+
+<p>This project is an application skeleton for a typical <strong>Loopback+AngularJS</strong> web app, which you can use
+to quickly bootstrap your own projects. It brings together <a href="http://loopback.io">Loopback</a> and
+<a href="https://joshdmiller.github.io/ng-boilerplate">ng-boilerplate</a>.</p>
+
+<h2>
+<a name="quick-start" class="anchor" href="#quick-start"><span class="octicon octicon-link"></span></a>Quick Start</h2>
+
+<p><strong>Note:</strong> Hopefully, you have your environment set up such that you don't need sudo to do <code>npm</code> anything
+but if not, just add sudo where appropriate.</p>
+
+<pre lang="shell"><code>mkdir myApp &amp;&amp; cd myApp
+git clone https://github.com/carlodicelico/loopback-ng-boilerplate.git .
+cd server &amp;&amp; npm install
+cd ../client &amp;&amp; npm install &amp;&amp; bower install
+grunt watch
+</code></pre>
+
+<p>In a new terminal tab/pane/window from your project's root, do:</p>
+
+<pre lang="shell"><code>node server/app
+</code></pre>
+
+<p>Go to <a href="http://localhost:3000">http://localhost:3000</a>. You'll probably also want to change the
+names <code>myApp</code> and <code>ngBoilerplate</code> to your own app's name throughout at some point.</p>
+
+<h2>
+<a name="structure" class="anchor" href="#structure"><span class="octicon octicon-link"></span></a>Structure</h2>
+
+<p>The project is set up with two completely independent directories - <code>/client</code> and <code>/server</code>. They're
+both already set up with individual <code>.gitignore</code> files, so that you can split these up into
+two separate git repos if you prefer. If not, feel free to remove them and just use the one in the
+project root.</p>
+
+<p>In <code>/client</code>, <code>grunt-loopback-angular</code> and <code>grunt-docular</code> have been installed and a grunt task called
+<code>loopback</code> registered in <code>Gruntfile.js</code>. The <code>loopback</code> task has been added to <code>default</code> so that besides
+being available via <code>grunt loopback</code>, it will automatically run when you do <code>grunt</code>. An initial
+<code>lb-services.js</code> file has been generated and injected as a dependency of the angular app.</p>
+
+<p>In <code>/server</code> is a barebones Loopback API. There's nothing more here than whatever is normally generated
+by <code>slc lb project myApp</code> except that <code>app.js</code> has been set up to serve the AngularJS app when <code>/</code> is
+requested. By default, Loopback will look for the <code>index.html</code> file in <code>/client/build</code>, where your
+Angular sources will be located in development, and automatically serve it to the client. To switch
+to production mode, just comment out the two <code>// DEVELOPMENT</code> sections and uncomment the two
+<code>// PRODUCTION</code> sections in <code>/server/app.js</code>:</p>
+
+<div class="highlight highlight-javascript"><pre><span class="c1">// The static file server should come after all other routes</span>
+<span class="c1">// Every request that goes through the static middleware hits</span>
+<span class="c1">// the file system to check if a file exists.</span>
+
+<span class="c1">// PRODUCTION</span>
+<span class="c1">// app.use(loopback.static(path.join(__dirname, '..', 'client', 'bin')));</span>
+
+<span class="c1">// DEVELOPMENT</span>
+<span class="nx">app</span><span class="p">.</span><span class="nx">use</span><span class="p">(</span><span class="nx">loopback</span><span class="p">.</span><span class="kr">static</span><span class="p">(</span><span class="nx">path</span><span class="p">.</span><span class="nx">join</span><span class="p">(</span><span class="nx">__dirname</span><span class="p">,</span> <span class="s1">'..'</span><span class="p">,</span> <span class="s1">'client'</span><span class="p">,</span> <span class="s1">'build'</span><span class="p">)));</span>
+
+<span class="c1">// Requests that don't match any of the above should be sent to</span>
+<span class="c1">// index, where we'll handle them using HTML5 history (Angular client)</span>
+
+<span class="c1">// PRODUCTION</span>
+<span class="c1">// app.use(function(req, res) {</span>
+<span class="c1">//   res.sendfile(path.join(__dirname, '..', 'client', 'bin', 'index.html'));</span>
+<span class="c1">// });</span>
+
+<span class="c1">// DEVELOPMENT</span>
+<span class="nx">app</span><span class="p">.</span><span class="nx">use</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">req</span><span class="p">,</span> <span class="nx">res</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">res</span><span class="p">.</span><span class="nx">sendfile</span><span class="p">(</span><span class="nx">path</span><span class="p">.</span><span class="nx">join</span><span class="p">(</span><span class="nx">__dirname</span><span class="p">,</span> <span class="s1">'..'</span><span class="p">,</span> <span class="s1">'client'</span><span class="p">,</span> <span class="s1">'build'</span><span class="p">,</span> <span class="s1">'index.html'</span><span class="p">));</span>
+<span class="p">});</span>
+</pre></div>
+
+<h2>
+<a name="usage" class="anchor" href="#usage"><span class="octicon octicon-link"></span></a>Usage</h2>
+
+<p>To work on the whole application, you'll need two terminal or tmux windows/tabs/panes - one for the
+client and one for the server. In the client tab, just run <code>grunt watch</code> and your sources will be
+built and tests run. In the server tab, just run <code>node server/app</code> and Loopback will serve the sources
+from the <code>/client/build</code> directory. In this way, you can have the Loopback API and client-side grunt
+tasks running simultaneously.</p>
+
+<p>If you want to work on the client-side app only, you can do so just as you normally would with
+<code>ng-boilerplate</code> - run <code>grunt watch</code> and open <code>file:///path/to/client/build/index.html</code> in your browser.</p>
+
+<p>When you're ready to deploy, you can do <code>grunt compile</code> and <code>node ../server/app</code>, do a quick
+once-over, and push according to your deployment or CI process. All you need to push to production is <code>/server</code>
+and <code>/client/bin</code>.</p>
+
+<p>For information specific to <a href="http://loopback.io">Loopback</a> or
+<a href="https://joshdmiller.github.io/ng-boilerplate">ng-boilerplate</a>, see their respective documentation.
+A lot of great documentation is included in various README files throughout the <code>/client</code> if you're
+not familiar with ng-boilerplate.</p>
+      </section>
+      <footer>
+        <p>This project is maintained by <a href="https://github.com/carlodicelico">carlodicelico</a></p>
+        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+      </footer>
+    </div>
+    <script src="javascripts/scale.fix.js"></script>
+    
+  </body>
+</html>
